@@ -1,4 +1,4 @@
-package com.cyk.easy.rpc.common;
+package com.cyk.easy.rpc.common.utils;
 
 import java.io.Serializable;
 import java.util.AbstractSet;

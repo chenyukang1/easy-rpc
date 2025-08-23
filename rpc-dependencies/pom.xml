@@ -12,12 +12,27 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <curator-version>4.2.0</curator-version>
         <logback.version>1.2.13</logback.version>
         <apache.commons.version>3.10</apache.commons.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <!-- zookeeper start-->
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-framework</artifactId>
+                <version>${curator-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-recipes</artifactId>
+                <version>${curator-version}</version>
+            </dependency>
+            <!-- zookeeper end-->
+
             <dependency>
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-classic</artifactId>
@@ -29,6 +44,8 @@
                 <artifactId>commons-lang3</artifactId>
                 <version>${apache.commons.version}</version>
             </dependency>
+
+
         </dependencies>
     </dependencyManagement>
 

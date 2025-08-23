@@ -1,6 +1,6 @@
 package com.cyk.easy.rpc.registry;
 
-import com.cyk.easy.rpc.common.ConcurrentHashSet;
+import com.cyk.easy.rpc.common.utils.ConcurrentHashSet;
 import com.cyk.easy.rpc.common.URL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +11,13 @@ public abstract class AbstractRegistry implements RegistryService {
 
     private static final Logger logger = LoggerFactory.getLogger(AbstractRegistry.class);
 
-    private final Set<URL> registered = new ConcurrentHashSet<>();
+    protected final Set<URL> registered = new ConcurrentHashSet<>();
+
+    protected final URL url;
+
+    protected AbstractRegistry(URL url) {
+        this.url = url;
+    }
 
     @Override
     public void register(URL url) {

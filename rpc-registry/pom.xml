@@ -37,6 +37,12 @@
             </dependency>
 
             <dependency>
+                <groupId>com.cyk.easy.rpc.remoting</groupId>
+                <artifactId>rpc-remoting</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>com.cyk.easy.rpc</groupId>
                 <artifactId>rpc-common</artifactId>
                 <version>${project.version}</version>

@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.cyk.easy.rpc</groupId>
-        <artifactId>rpc-registry</artifactId>
+        <artifactId>easy-rpc</artifactId>
         <version>${revision}</version>
     </parent>
 
-    <groupId>com.cyk.easy.rpc.registry</groupId>
-    <artifactId>rpc-registry-zookeeper</artifactId>
+    <groupId>com.cyk.easy.rpc.remoting</groupId>
+    <artifactId>rpc-remoting</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -20,13 +20,19 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.cyk.easy.rpc.registry</groupId>
-            <artifactId>rpc-registry-api</artifactId>
+            <groupId>com.cyk.easy.rpc</groupId>
+            <artifactId>rpc-common</artifactId>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>com.cyk.easy.rpc.remoting</groupId>
-            <artifactId>rpc-remoting</artifactId>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-framework</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-recipes</artifactId>
         </dependency>
     </dependencies>
 
