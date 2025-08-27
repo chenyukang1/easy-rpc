@@ -9,6 +9,6 @@ public class ZookeeperURLEncoder implements URLEncoder {
 
     @Override
     public String toUrlPath(URL url) {
-        return encode(url.service()) + PATH_SEPARATOR + encode(url.toString());;
+        return encode(url.service()) + PATH_SEPARATOR + encode(url.toString());
     }
 }

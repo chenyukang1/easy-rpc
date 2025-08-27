@@ -5,14 +5,11 @@ import com.cyk.easy.rpc.common.utils.StringUtils;
 
 import java.io.Serializable;
 import java.net.InetSocketAddress;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static com.cyk.easy.rpc.common.constant.Constants.PATH_SEPARATOR;
-import static com.cyk.easy.rpc.common.constant.Constants.PROVIDERS_CATEGORY;
+import static com.cyk.easy.rpc.common.constant.Constants.*;
 
 /**
  * protocol://[username[:password]@]host:port/service
@@ -43,18 +40,19 @@ public record URL(String protocol, InetSocketAddress address, List<InetSocketAdd
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder(protocol() + "://");
+        StringBuilder builder = new StringBuilder(protocol() + PROTOCOL_SEPARATOR);
         if (StringUtils.isNotEmpty(username())) {
             builder.append(username());
             if (StringUtils.isNotEmpty(password())) {
-                builder.append(":").append(password());
+                builder.append(GROUP_CHAR_SEPARATOR).append(password());
             }
-            builder.append("@");
+            builder.append(USERINFO_SEPARATOR);
         }
-        builder.append(address().getHostName()).append(":").append(address().getPort());
+        builder.append(address().getHostName()).append(GROUP_CHAR_SEPARATOR).append(address().getPort());
         if (backup() != null && !backup().isEmpty()) {
             for (InetSocketAddress backupAddress : backup()) {
-                builder.append(",").append(backupAddress.getHostName()).append(":").append(backupAddress.getPort());
+                builder.append(ADDRESS_SEPARATOR).append(backupAddress.getHostName())
+                        .append(GROUP_CHAR_SEPARATOR).append(backupAddress.getPort());
             }
         }
         return builder.toString();
@@ -62,10 +60,10 @@ public record URL(String protocol, InetSocketAddress address, List<InetSocketAdd
 
     public List<String> getPrimaryAndBackupAddress() {
         List<String> addressList = new ArrayList<>();
-        addressList.add(address().getHostName() + ":" + address().getPort());
+        addressList.add(address().getHostName() + GROUP_CHAR_SEPARATOR + address().getPort());
         if (backup() != null && !backup().isEmpty()) {
             for (InetSocketAddress backupAddress : backup()) {
-                addressList.add(backupAddress.getHostName() + ":" + backupAddress.getPort());
+                addressList.add(backupAddress.getHostName() + GROUP_CHAR_SEPARATOR + backupAddress.getPort());
             }
         }
         return addressList;
@@ -78,29 +76,13 @@ public record URL(String protocol, InetSocketAddress address, List<InetSocketAdd
      */
     public String getPrimaryAndBackupConnString() {
         StringBuilder builder =
-                new StringBuilder(protocol() + "://" + address().getHostName() + ":" + address().getPort());
+                new StringBuilder(protocol() + PROTOCOL_SEPARATOR + address().getHostName() + GROUP_CHAR_SEPARATOR + address().getPort());
         if (backup() != null && !backup().isEmpty()) {
             for (InetSocketAddress backupAddress : backup()) {
-                builder.append(",").append(backupAddress.getHostName()).append(":").append(backupAddress.getPort());
+                builder.append(ADDRESS_SEPARATOR).append(backupAddress.getHostName()).append(GROUP_CHAR_SEPARATOR).append(backupAddress.getPort());
             }
         }
         return builder.toString();
-    }
-
-    public String toURLPath() {
-        return URL.encode(this.service()) + PATH_SEPARATOR + URL.encode(this.toString());
-    }
-
-    public String toCategoryPath() {
-        String servicePath = URL.encode(this.service());
-        return servicePath + PATH_SEPARATOR + PROVIDERS_CATEGORY;
-    }
-
-    public static String encode(String value) {
-        if (StringUtils.isEmpty(value)) {
-            return "";
-        }
-        return URLEncoder.encode(value, StandardCharsets.UTF_8);
     }
 
     public static URLBuilder builder() {
